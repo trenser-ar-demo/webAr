@@ -106,27 +106,84 @@ function loadImages() {
 	element.appendChild(markerDiv);
 }
 
+AFRAME.registerComponent('expand', {
+
+	init: function () {
+
+		var entity = document.querySelector('a-text');
+
+		const timeline = anime.timeline({
+			easing: 'easeInOutSine',
+			// direction: 'alternate',
+			//	targets:entity ,
+			//	width:10,
+			loop: true,
+			duration: 250
+		});
+
+		timeline.add({
+			targets: entity,
+			width: 10
+		})
+		timeline.add({
+			targets: entity,
+			width: 5
+		})
+		timeline.add({
+			targets: entity,
+			width: 10
+		})
+
+		// anime({
+		// 	targets: entity,
+		// 	update: function() {  
+		// 	  entity.setAttribute('width', 15 )
+		// 	}
+		//   })
+
+	}
+});
 
 function loadText() {
 	const urlParams = new URLSearchParams(window.location.search)
 
 	let modelId = urlParams.get("model")
-	let anime_type = urlParams.get("anime_type")
+
 
 	const markerDiv = document.createElement("a-text");
 	markerDiv.setAttribute("value", modelId);
 	markerDiv.setAttribute("scale", "1 1 1");
 	markerDiv.setAttribute("color", "red");
-	markerDiv.setAttribute("rotation", "0 0 0");
-	markerDiv.setAttribute("position", "0 0 0");
+	//	markerDiv.setAttribute("opacity", "0 0 0");
+	markerDiv.setAttribute("position", "0 0.5 0");
 	markerDiv.setAttribute("align", "center");
-	markerDiv.setAttribute("scale", "3 3 3",);
+	//markerDiv.setAttribute("align", "center");
+	markerDiv.setAttribute("id", "the-text");
+	markerDiv.setAttribute("opacity", "1");
 
-	markerDiv.setAttribute("animation", "property: scale;from :1 1 1; to: 3 3 3; dur: 7000; easing: easeInSine; loop:true");
+	/////flashing///////
+//	markerDiv.setAttribute("animation" , "property: opacity; to: 0; loop: true; dur: 500")
 
 	var element = document.getElementById("#modelEntity");
+
 	element.appendChild(markerDiv);
 
-	// from here
+	// // Expansion // //
+
+	anime({
+		targets: "#the-text",
+		keyframes: [
+			{ scale: "1.4, 0.8, 1" },
+			{ scale: "0.8, 1.4, 1" },
+			{ scale: "1.1, 0.8, 1" },
+			{ scale: "0.8, 1.4, 1" },
+			{ scale: "1, 1, 1" },
+		],
+		duration: 1500,
+		loop: true,
+		easing: 'easeInOutExpo'
+	  })
+
+
 
 }
