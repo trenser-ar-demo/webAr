@@ -5,6 +5,7 @@ function loadMarkers() {
 	let imageId = urlParams.get("image")
 	let modelId = urlParams.get("model")
 	let modelType = urlParams.get("type")
+	let textAnimeType = urlParams.get("text_anime_type")
 	console.log(imageId);
 	console.log(modelId);
 	console.log(modelType);
@@ -27,7 +28,7 @@ function loadMarkers() {
 		loadImages();
 	}
 	else if (modelType == "text") {
-		loadText()
+		loadText(textAnimeType)
 	}
 }
 
@@ -144,7 +145,7 @@ AFRAME.registerComponent('expand', {
 	}
 });
 
-function loadText() {
+function loadText(anime_type) {
 	const urlParams = new URLSearchParams(window.location.search)
 
 	let modelId = urlParams.get("model")
@@ -155,35 +156,61 @@ function loadText() {
 	markerDiv.setAttribute("scale", "1 1 1");
 	markerDiv.setAttribute("color", "red");
 	//	markerDiv.setAttribute("opacity", "0 0 0");
-	markerDiv.setAttribute("position", "0 0.5 0");
+	markerDiv.setAttribute("position", "0 0 0");
 	markerDiv.setAttribute("align", "center");
 	//markerDiv.setAttribute("align", "center");
 	markerDiv.setAttribute("id", "the-text");
 	markerDiv.setAttribute("opacity", "1");
 
 	/////flashing///////
-//	markerDiv.setAttribute("animation" , "property: opacity; to: 0; loop: true; dur: 500")
+	if (anime_type === 'flashing') {
+		markerDiv.setAttribute("animation", "property: opacity; to: 0; loop: true; dur: 500")
+	}
 
 	var element = document.getElementById("#modelEntity");
-
 	element.appendChild(markerDiv);
 
-	// // Expansion // //
 
-	anime({
-		targets: "#the-text",
-		keyframes: [
-			{ scale: "1.4, 0.8, 1" },
-			{ scale: "0.8, 1.4, 1" },
-			{ scale: "1.1, 0.8, 1" },
-			{ scale: "0.8, 1.4, 1" },
-			{ scale: "1, 1, 1" },
-		],
-		duration: 1500,
-		loop: true,
-		easing: 'easeInOutExpo'
-	  })
+	/////// Expansion ///////
+
+	if (anime_type === 'expansion_contraction') {
+		anime({
+			targets: "#the-text",
+			keyframes: [
+				{ scale: "1.4, 0.8, 1" },
+				{ scale: "0.8, 1.4, 1" },
+				{ scale: "1.1, 0.8, 1" },
+				{ scale: "0.8, 1.4, 1" },
+				{ scale: "1, 1, 1" },
+			],
+			duration: 1500,
+			loop: true,
+			easing: 'easeInOutExpo'
+		})
+
+	}
 
 
+	////// Vibration //////
+
+	// 	anime({
+	// 	targets: "#the-text",
+	// 	keyframes: [
+
+
+	// 	],
+	// 	duration: 500,
+	// 	loop: true,
+	// 	easing: 'easeInOutExpo'
+	//   })
+
+	//   0% {	transform: translate(0, 0) rotateZ(0deg);}
+	//   5% {	transform: translate(-4%, -0) rotateZ(-1deg);}
+	//   10% {	transform: translate(4%, 0) rotateZ(1deg);}
+	//   15% {	transform: translate(-4%, -0) rotateZ(-1deg);}
+	//   20% {	transform: translate(4%, 0) rotateZ(1deg);}
+	//   25% {	transform: translate(-4%, -0) rotateZ(-1deg);}
+	//   30% {	transform: translate(0, 0) rotateZ(0deg);}
+	//   100% {	transform: translate(0, 0) rotateZ(0deg);}
 
 }
