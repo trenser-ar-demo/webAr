@@ -107,43 +107,7 @@ function loadImages() {
 	element.appendChild(markerDiv);
 }
 
-AFRAME.registerComponent('expand', {
 
-	init: function () {
-
-		var entity = document.querySelector('a-text');
-
-		const timeline = anime.timeline({
-			easing: 'easeInOutSine',
-			// direction: 'alternate',
-			//	targets:entity ,
-			//	width:10,
-			loop: true,
-			duration: 250
-		});
-
-		timeline.add({
-			targets: entity,
-			width: 10
-		})
-		timeline.add({
-			targets: entity,
-			width: 5
-		})
-		timeline.add({
-			targets: entity,
-			width: 10
-		})
-
-		// anime({
-		// 	targets: entity,
-		// 	update: function() {  
-		// 	  entity.setAttribute('width', 15 )
-		// 	}
-		//   })
-
-	}
-});
 
 function loadText(anime_type) {
 	const urlParams = new URLSearchParams(window.location.search)
@@ -156,7 +120,7 @@ function loadText(anime_type) {
 	markerDiv.setAttribute("scale", "1 1 1");
 	markerDiv.setAttribute("color", "red");
 	//	markerDiv.setAttribute("opacity", "0 0 0");
-	markerDiv.setAttribute("position", "0 0 0");
+	//markerDiv.setAttribute("position", "0 0 0");
 	markerDiv.setAttribute("align", "center");
 	//markerDiv.setAttribute("align", "center");
 	markerDiv.setAttribute("id", "the-text");
@@ -177,15 +141,16 @@ function loadText(anime_type) {
 		anime({
 			targets: "#the-text",
 			keyframes: [
+				{ scale: "1, 1, 1" },
 				{ scale: "1.4, 0.8, 1" },
 				{ scale: "0.8, 1.4, 1" },
 				{ scale: "1.1, 0.8, 1" },
 				{ scale: "0.8, 1.4, 1" },
 				{ scale: "1, 1, 1" },
 			],
-			duration: 1500,
+			duration: 2000,
 			loop: true,
-			easing: 'easeInOutExpo'
+			easing: 'linear'
 		})
 
 	}
@@ -193,24 +158,27 @@ function loadText(anime_type) {
 
 	////// Vibration //////
 
-	// 	anime({
-	// 	targets: "#the-text",
-	// 	keyframes: [
+	if (anime_type === 'vibration') {
+		anime({
+			targets: "#the-text",
+			position: [
+						{ value: "0 0 0" },
+						{ value: "-0.01 0 0" },
+						{ value: "0 0 0" },
+						{ value: "0.01 0 0" },
+					],
+					rotation: [
+						{ value: "0 0 0" },
+						{ value: "0 0 -1" },
+						{ value: "0 0 0" },
+						{ value: "0 0 1" },
+					],
+				duration: 200,
+				loop: true,
+				easing: 'linear'
+		})
 
+	}
 
-	// 	],
-	// 	duration: 500,
-	// 	loop: true,
-	// 	easing: 'easeInOutExpo'
-	//   })
-
-	//   0% {	transform: translate(0, 0) rotateZ(0deg);}
-	//   5% {	transform: translate(-4%, -0) rotateZ(-1deg);}
-	//   10% {	transform: translate(4%, 0) rotateZ(1deg);}
-	//   15% {	transform: translate(-4%, -0) rotateZ(-1deg);}
-	//   20% {	transform: translate(4%, 0) rotateZ(1deg);}
-	//   25% {	transform: translate(-4%, -0) rotateZ(-1deg);}
-	//   30% {	transform: translate(0, 0) rotateZ(0deg);}
-	//   100% {	transform: translate(0, 0) rotateZ(0deg);}
 
 }
