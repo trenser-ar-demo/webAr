@@ -116,7 +116,7 @@ function loadText(anime_type) {
 
 
 	const markerDiv = document.createElement("a-text");
-	markerDiv.setAttribute("value", modelId);
+//	markerDiv.setAttribute("value", modelId);
 	markerDiv.setAttribute("scale", "1 1 1");
 	markerDiv.setAttribute("color", "red");
 	//	markerDiv.setAttribute("opacity", "0 0 0");
@@ -128,8 +128,10 @@ function loadText(anime_type) {
 
 	/////flashing///////
 	if (anime_type === 'flashing') {
+		markerDiv.setAttribute("value", modelId);
 		markerDiv.setAttribute("animation", "property: opacity; to: 0; loop: true; dur: 500")
 	}
+
 
 	var element = document.getElementById("#modelEntity");
 	element.appendChild(markerDiv);
@@ -138,20 +140,35 @@ function loadText(anime_type) {
 	/////// Expansion ///////
 
 	if (anime_type === 'expansion_contraction') {
+		markerDiv.setAttribute("value", modelId);
 		anime({
 			targets: "#the-text",
-			keyframes: [
-				{ scale: "1, 1, 1" },
-				{ scale: "1.4, 0.8, 1" },
-				{ scale: "0.8, 1.4, 1" },
-				{ scale: "1.1, 0.8, 1" },
-				{ scale: "0.8, 1.4, 1" },
-				{ scale: "1, 1, 1" },
+			scale: [
+				{ value: "1, 1, 1" },
+				{ value: "1.4, 0.8, 1" },
+				{ value: "0.8, 1.4, 1" },
+				{ value: "1.1, 0.8, 1" },
+				{ value: "0.8, 1.4, 1" },
+				{ value: "1, 1, 1" },
 			],
 			duration: 2000,
 			loop: true,
 			easing: 'linear'
 		})
+		// anime({
+		// 	targets: "#the-text",
+		// 	keyframes: [
+		// 		{ scale: "1, 1, 1" },
+		// 		{ scale: "1.4, 0.8, 1" },
+		// 		{ scale: "0.8, 1.4, 1" },
+		// 		{ scale: "1.1, 0.8, 1" },
+		// 		{ scale: "0.8, 1.4, 1" },
+		// 		{ scale: "1, 1, 1" },
+		// 	],
+		// 	duration: 2000,
+		// 	loop: true,
+		// 	easing: 'linear'
+		// })
 
 	}
 
@@ -159,26 +176,123 @@ function loadText(anime_type) {
 	////// Vibration //////
 
 	if (anime_type === 'vibration') {
+		markerDiv.setAttribute("value", modelId);
 		anime({
 			targets: "#the-text",
 			position: [
-						{ value: "0 0 0" },
-						{ value: "-0.01 0 0" },
-						{ value: "0 0 0" },
-						{ value: "0.01 0 0" },
-					],
-					rotation: [
-						{ value: "0 0 0" },
-						{ value: "0 0 -1" },
-						{ value: "0 0 0" },
-						{ value: "0 0 1" },
-					],
-				duration: 200,
-				loop: true,
-				easing: 'linear'
+				{ value: "0 0 0" },
+				{ value: "-0.01 0 0" },
+				{ value: "0 0 0" },
+				{ value: "0.01 0 0" },
+			],
+			rotation: [
+				{ value: "0 0 0" },
+				{ value: "0 0 -1" },
+				{ value: "0 0 0" },
+				{ value: "0 0 1" },
+			],
+			duration: 200,
+			loop: true,
+			easing: 'linear'
 		})
 
 	}
 
+	////// color //////
+	if (anime_type === 'color_gradient') {
+		markerDiv.setAttribute("value", modelId);
+		anime({
+			targets: "#the-text",
 
+			duration: 200,
+			loop: true,
+			easing: 'linear'
+		})
+
+	}
+
+	////// typewriter //////
+	if (anime_type === 'type_writer') {
+		tw({
+			// (C1) REQUIRED
+			target: document.getElementById("the-text"),
+			text: [modelId],
+			// (C2) OPTIONAL
+			forward: 500,  // delay between each character, default 100 ms
+			backward: 200, // delay between each character, default 50 ms
+			pause: 2000,  // pause before next cycle, default 1 sec
+			loop: true,   // loop typewriter effect, default true
+			cursor: false  // add fake cursor? default true
+		});
+
+	}
+
+
+}
+
+function tw(instance) {
+	// (A) SET DEFAULT OPTIONS
+	if (instance.forward === undefined) { instance.forward = 100; }
+	if (instance.backward === undefined) { instance.backward = 50; }
+	if (instance.pause === undefined) { instance.pause = 1000; }
+	if (instance.loop === undefined) { instance.loop = true; }
+	if (instance.cursor === undefined) { instance.cursor = true; }
+	if (typeof instance.text != "object") { instance.text = [instance.text]; }
+
+	// (B) PROPERTIES & FLAGS
+	instance.current = 0;      // current text
+	instance.pointer = 0;      // current character
+	instance.direction = true; // true forward, false backward
+	instance.draw = true;      // continue to "type text"?
+
+	// (C) TYPEWRITER EFFECT
+	if (instance.cursor) { instance.target.classList.add("cursor"); }
+	instance.typist = () => {
+		// (C1) NEXT CHARACTER
+		if (instance.direction) {
+			instance.pointer++;
+			instance.draw = instance.pointer <= instance.text[instance.current].length;
+		} else {
+			instance.pointer--;
+			instance.draw = instance.pointer >= 0;
+		}
+
+		// (C2) DRAW HTML
+		if (instance.draw) {
+			//  console.log("inner html", instance.text[instance.current].substring(0, instance.pointer))
+			//	instance.target.innerHTML = instance.text[instance.current].substring(0, instance.pointer);
+			instance.target.setAttribute("value", instance.text[instance.current].substring(0, instance.pointer))
+		}
+
+		// (C3) PAUSE & LOOP?
+		else {
+			// (C3-1) CLEAR TIMER + REVERSE DIRECTION
+			clearInterval(instance.timer);
+			instance.direction = !instance.direction;
+
+			// (C3-2) NEXT BLOCK OF TEXT
+			if (instance.direction) {
+				instance.current++;
+				if (instance.loop && instance.current == instance.text.length) {
+					instance.current = 0;
+				}
+
+				if (instance.current <= instance.text.length) {
+					instance.timer = setTimeout(() => {
+						instance.timer = setInterval(instance.typist, instance.forward);
+					}, instance.pause);
+				}
+			}
+
+			// (C3-3) PAUSE THEN CLEAR TEXT
+			else {
+				instance.timer = setTimeout(() => {
+					instance.timer = setInterval(instance.typist, instance.backward);
+				}, instance.pause);
+			}
+		}
+	};
+
+	// (D) START
+	instance.timer = setInterval(instance.typist, instance.forward);
 }
