@@ -118,13 +118,16 @@ function loadText(anime_type) {
 	const markerDiv = document.createElement("a-text");
 //	markerDiv.setAttribute("value", modelId);
 	markerDiv.setAttribute("scale", "1 1 1");
-	markerDiv.setAttribute("color", "red");
+	markerDiv.setAttribute("color", "#F32505");
 	//	markerDiv.setAttribute("opacity", "0 0 0");
 	//markerDiv.setAttribute("position", "0 0 0");
 	markerDiv.setAttribute("align", "center");
 	//markerDiv.setAttribute("align", "center");
 	markerDiv.setAttribute("id", "the-text");
 	markerDiv.setAttribute("opacity", "1");
+//	markerDiv.setAttribute("animation", "property:color; to:#0D20EA; dur:20000; loop:true,");
+	
+//	markerDiv.setAttribute("value", modelId);
 
 	/////flashing///////
 	if (anime_type === 'flashing') {

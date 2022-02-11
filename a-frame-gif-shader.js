@@ -20,6 +20,7 @@ function createError(err, src) {
     return { status: 'error', src: src, message: err, timestamp: Date.now() }
 }
 
+var userGifler = false;
 
 AFRAME.registerShader('draw-canvas', {
 
@@ -52,7 +53,6 @@ AFRAME.registerShader('draw-canvas', {
         this.__texture = new THREE.CanvasTexture(this.__cnv); //renders straight from a canvas
         this.__texture.needsUpdate = true;
         this.__reset();
-        // console.log('color : ', new THREE.Color( 0x800080 ));
         this.material = new THREE.MeshBasicMaterial({
             map: this.__texture,
             fog: false,
@@ -61,17 +61,19 @@ AFRAME.registerShader('draw-canvas', {
             // alphaTest: 0.5
             // color: 0x800080
         });
-        // this.material.color.setStyle("#0000ffff");
-        console.log(this.material.toJSON());
         this.__texture.needsUpdate = true;
 
-        this._fillImages((images) => {
-            console.log(images);
-            this.__frames = images;
-            this.__addPublicFunctions();
-            this.el.sceneEl.addBehavior(this);
-            this.__updateTexture(data);
-        });
+        // this._fillImages((images) => {
+        //     console.log("asdf");
+        //     this.__frames = images;
+        //     this.__addPublicFunctions();
+        //     this.el.sceneEl.addBehavior(this);
+        //     this.__updateTexture(data);
+        // });
+        this.__addPublicFunctions();
+        this.el.sceneEl.addBehavior(this);
+        this.__updateTexture(data);
+
         return this.material;
     },
 
@@ -81,7 +83,6 @@ AFRAME.registerShader('draw-canvas', {
      * @param {object|null} oldData
      */
     update: function update(oldData) {
-        // console.log('update', oldData);
         this.__updateTexture(oldData);
         return this.material;
     },
@@ -92,7 +93,7 @@ AFRAME.registerShader('draw-canvas', {
      * @protected
      */
     tick: function tick(t) {
-        if (!this.__frames || this.paused()) return;
+        // if (!this.__frames || this.paused()) return;
         if (Date.now() - this.__startTime >= this.__nextFrameTime) {
             this.nextFrame();
         }
@@ -291,11 +292,9 @@ AFRAME.registerShader('draw-canvas', {
                     onError('This is not gif. Please use `shader:flat` instead');
                     return;
                 }
-                console.log('getimage');
-
                 /* parse data */
                 parseGIFShader(arr, function (times, cnt, frames) {
-                    console.log('getimage 1');
+                    console.log("asdfasdgasdgasdgasdgasdgasdfgadsg");
                     /* store data */
                     var newData = { status: 'success', src: src, times: times, cnt: cnt, frames: frames, timestamp: Date.now() };
                     /* callbacks */
@@ -307,7 +306,6 @@ AFRAME.registerShader('draw-canvas', {
                         gifData[src] = newData;
                     }
                 }, function (err) {
-                    console.log('getimage 2');
 
                     return onError(err);
                 });
@@ -345,18 +343,34 @@ AFRAME.registerShader('draw-canvas', {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', src);
         xhr.responseType = 'arraybuffer';
-        xhr.addEventListener('load',  (e)=> {
+        xhr.addEventListener('load', (e) => {
             var uint8Array = new Uint8Array(e.target.response);
 
             var gif = parseGIFUCT(e.target.response);
-            console.log(gif);
             var frames = decompressFrames(gif, true);
-            // console.log(frames)
             this.__delayTimes = [];
-             frames.forEach((frame)=>{
+            frames.forEach((frame) => {
                 this.__delayTimes.push(frame.delay);
             });
             console.log(this.__delayTimes);
+
+
+            // this.__textureSrc = src;
+            // this.__infinity = true;
+            // this.__frameCnt = frames.length;
+            // this.__startTime = Date.now();
+            // this.__width = THREE.Math.floorPowerOfTwo(frames[0].dims.width);
+            // this.__height = THREE.Math.floorPowerOfTwo(frames[0].dims.height);
+            // this.__cnv.width = this.__width;
+            // this.__cnv.height = this.__height;
+            // this.canvasAsset.width = this.__width;
+            // this.canvasAsset.height = this.__height;
+            // this.__draw();
+            // if (this.__autoplay) {
+            //     this.play();
+            // } else {
+            //     this.pause();
+            // }
 
             var arr = uint8Array.subarray(0, 4);
             // const header = arr.map(value => value.toString(16)).join('')
@@ -467,6 +481,9 @@ AFRAME.registerShader('draw-canvas', {
      * @public
      */
     nextFrame: function nextFrame() {
+        if(!this.__delayTimes){
+            return
+        }
         this.__draw();
 
         /* update next frame time */
@@ -490,9 +507,13 @@ AFRAME.registerShader('draw-canvas', {
      * @private
      */
     __clearCanvas: function __clearCanvas() {
-        this.canvasAssetCtx.clearRect(0, 0, this.__width, this.__height);
-        document.getElementById("#modelEntaImage").setAttribute('material', 'src', '');
-        this.__ctx.clearRect(0, 0, this.__width, this.__height);
+        if (this.__frames && this.__frames.length > 0) {
+            this.canvasAssetCtx.clearRect(0, 0, this.__width, this.__height);
+            document.getElementById("#modelEntaImage").setAttribute('material', 'src', '');
+            this.__ctx.clearRect(0, 0, this.__width, this.__height);
+        } else{
+            document.getElementById("#modelEntaImage").setAttribute('material', 'src', '');
+        }
         this.__texture.needsUpdate = true;
     },
 
@@ -503,18 +524,16 @@ AFRAME.registerShader('draw-canvas', {
      */
     __draw: function __draw() {
         this.__clearCanvas();
-        // var image = new Image();
-        // image.src = this.__frames[this.__frameIdx].src;
-        // const img = document.getElementById('butterflies');
-        // img.src = this.__frames[this.__frameIdx].src
+
         if (this.__frames && this.__frames.length > 0) {
             this.canvasAssetCtx.drawImage(this.__frames[this.__frameIdx], 0, 0, this.__width, this.__height);
             document.getElementById("#modelEntaImage").setAttribute('material', 'src', '#my-canvas');
             this.__ctx.drawImage(this.__frames[this.__frameIdx], 0, 0, this.__width, this.__height);
             // console.log(image);
-
-            this.__texture.needsUpdate = true;
+        } else {
+            document.getElementById("#modelEntaImage").setAttribute('material', 'src', '#my-canvas');
         }
+        this.__texture.needsUpdate = true;
     },
 
 
@@ -541,7 +560,13 @@ AFRAME.registerShader('draw-canvas', {
         // this.__delayTimes = times;
         cnt ? this.__loopCnt = cnt : this.__infinity = true;
         // this.__infinity = true;
-        // this.__frames = frames;
+        if (times[0] !== 0) {
+            gifler('https://anishjiben.github.io/webar-demo-main/models/Image/butterflies.gif').animate(this.canvasAsset);
+            userGifler = true;
+        } else {
+            this.__frames = frames;
+            userGifler = false;
+        }
         this.__frameCnt = times.length;
         this.__startTime = Date.now();
         this.__width = THREE.Math.floorPowerOfTwo(frames[0].width);
@@ -568,14 +593,12 @@ AFRAME.registerShader('draw-canvas', {
      */
 
     __reset: function __reset() {
-        console.log('reset');
         this.pause();
         this.__clearCanvas();
         this.__startTime = 0;
         this.__nextFrameTime = 0;
         this.__frameIdx = 0;
         this.__frameCnt = 0;
-        console.log(this.__delayTimes);
         // this.__delayTimes = null;
         this.__infinity = false;
         this.__loopCnt = 0;
@@ -584,6 +607,11 @@ AFRAME.registerShader('draw-canvas', {
     },
 
     _fillImages: function _fillImages(cb) {
+
+        if (this.__frames && this.__frames.length > 0) {
+            return
+        }
+
         let c = document.getElementById("myCanvas");
         let ctx = c.getContext("2d");
         ctx.clearRect(0, 0, ctx.width, ctx.height);
@@ -603,22 +631,26 @@ AFRAME.registerShader('draw-canvas', {
                     // Keep the reference to save on expensive DOM lookups every iteration.
                     let frames = $("#frames");
                     for (let i = 0; i < rub.get_length(); i++) {
-                        total += 1;
+                        // setTimeout(() => {
                         rub.move_to(i);
-                        // var canvas = cloneCanvas(rub.get_canvas());
-                        var canvas = rub.get_canvas().toDataURL('image/webp');
-                        let img = $('<img id = "gifframe' + i + '"src= "' + canvas + '" class="frameimages" width="360" height="360">');
-
-                        // Use the reference to append the image.
-                        // frames.append(img);
-
-                        // Add image to images array with the current index as the array index.
-                        // Use the jQuery get method to get the actual DOM element.
-                        images[i] = img.get(0);
+                        rub.get_canvas().toBlob((blob) => {
+                            total += 1;
+                            url = URL.createObjectURL(blob);
+                            var img = new Image();
+                            img.src = url;
+                            // let img = $('<img id = "gifframe' + i + '"src= "' + url + '" class="frameimages" width="360" height="360">');
+                            images[i] = img;
+                            console.log(total);
+                            if (total == rub.get_length()) {
+                                console.log("loop end");
+                                cb(images);
+                            }
+                        }, 'image/png', 0.1);
+                        // console.log("loop started ");
+                        // }, 1000);
                     }
                     //   frames.append(images[0]);
-                    //   console.log(images[0]);
-                    cb(images);
+                    // cb(images);
                 });
             }
         });
@@ -635,12 +667,10 @@ parseGIFShader = function (gif, successCB, errorCB) {
     var imageData = null;
     var frames = [];
     var loopCnt = 0;
-    // console.log('parse ',gif);
     if (gif[0] === 0x47 && gif[1] === 0x49 && gif[2] === 0x46 && // 'GIF'
         gif[3] === 0x38 && gif[4] === 0x39 && gif[5] === 0x61) {
         // '89a'
         pos += 13 + +!!(gif[10] & 0x80) * Math.pow(2, (gif[10] & 0x07) + 1) * 3;
-        // console.log('parse ',pos);
         var gifHeader = gif.subarray(0, pos);
         while (gif[pos] && gif[pos] !== 0x3b) {
             var offset = pos,
@@ -648,8 +678,6 @@ parseGIFShader = function (gif, successCB, errorCB) {
             if (blockId === 0x21) {
                 var label = gif[++pos];
                 if ([0x01, 0xfe, 0xf9, 0xff].indexOf(label) !== -1) {
-                    // label === 0xf9 && console.log('parse delay',pos + 3);
-                    // label === 0xf9 && console.log('parse delay2 ',gif[pos + 3], ":", (gif[pos + 4] << 8));
                     label === 0xf9 && delayTimes.push((gif[pos + 3] + (gif[pos + 4] << 8)) * 10);
                     label === 0xff && (loopCnt = gif[pos + 15] + (gif[pos + 16] << 8));
                     while (gif[++pos]) {
@@ -692,7 +720,6 @@ parseGIFShader = function (gif, successCB, errorCB) {
                     }
                 }.bind(img, null, i);
                 img.src = src;
-                // console.log('img: ', img);
             });
         };
         var imageFix = function imageFix(i) {
