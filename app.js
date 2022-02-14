@@ -27,20 +27,29 @@ function loadMarkers() {
 	var sceneNode = document.getElementById("#scene");
 	sceneNode.setAttribute("mindar-image", imageSample);
 
-	const exampleTarget = document.getElementById('#modelEntity');
+	// const exampleTarget = document.getElementById('#modelEntity');
+	// exampleTarget.addEventListener("targetFound", event => {
 
-	exampleTarget.addEventListener("targetFound", event => {
+	// 	if (modelType == "3d") {
+	// 		load3dModles();
+	// 	}
+	// 	else if (modelType == "2d") {
+	// 		loadImages();
+	// 	}
+	// 	else if (modelType == "text") {
+	// 		loadText(textAnimeType)
+	// 	}
+	// })
 
-		if (modelType == "3d") {
-			load3dModles();
-		}
-		else if (modelType == "2d") {
-			loadImages();
-		}
-		else if (modelType == "text") {
-			loadText(textAnimeType)
-		}
-	})
+	if (modelType == "3d") {
+		load3dModles();
+	}
+	else if (modelType == "2d") {
+		loadImages();
+	}
+	else if (modelType == "text") {
+		loadText(textAnimeType)
+	}
 
 }
 
@@ -135,9 +144,9 @@ function loadText(anime_type) {
 	//markerDiv.setAttribute("align", "center");
 	markerDiv.setAttribute("id", "the-text");
 	markerDiv.setAttribute("opacity", "1");
-	//	markerDiv.setAttribute("animation", "property:color; to:#0D20EA; dur:20000; loop:true,");
+	markerDiv.setAttribute("value", " ");
 
-	//	markerDiv.setAttribute("value", modelId);
+
 
 
 	var element = document.getElementById("#modelEntity");
@@ -228,46 +237,43 @@ function loadText(anime_type) {
 	}
 
 	////// typewriter //////
-	if (anime_type === 'type_writer') {
-		type_write({
-			// (C1) REQUIRED
-			target: document.getElementById("the-text"),
-			text: [modelId],
-			// (C2) OPTIONAL
-			forward: 500,  // delay between each character, default 100 ms
-			backward: 200, // delay between each character, default 50 ms
-			pause: 2000,  // pause before next cycle, default 1 sec
-			loop: true,   // loop typewriter effect, default true
-			cursor: false  // add fake cursor? default true
-		});
+	if (anime_type === 'type_writer' ) {
+
+
+		// type_write({
+		// 	// (C1) REQUIRED
+		// 	target: document.getElementById("the-text"),
+		// 	text: [modelId],
+		// 	// (C2) OPTIONAL
+		// 	forward: 500,  // delay between each character, default 100 ms
+		// 	backward: 200, // delay between each character, default 50 ms
+		// 	pause: 2000,  // pause before next cycle, default 1 sec
+		// 	loop: true,   // loop typewriter effect, default true
+		// 	cursor: false  // add fake cursor? default true
+		// });
+
+		const exampleTarget = document.getElementById('#modelEntity');
+		exampleTarget.addEventListener("targetFound", event => {
+			//console.log("called")
+			type_write({
+				// (C1) REQUIRED
+				target: document.getElementById("the-text"),
+				text: [modelId],
+				// (C2) OPTIONAL
+				forward: 500,  // delay between each character, default 100 ms
+				backward: 200, // delay between each character, default 50 ms
+				pause: 2000,  // pause before next cycle, default 1 sec
+				loop: true,   // loop typewriter effect, default true
+				cursor: false  // add fake cursor? default true
+			});
+		})
+
+
 
 	}
 
 
 }
-
-function applyEvetListener() {
-
-	const exampleTarget = document.getElementById('modelEntity');
-
-	// exampleTarget.addEventListener("targetFound", event => {
-
-	// 	let modelType = urlParams.get("type")
-	// 	let textAnimeType = urlParams.get("text_anime_type")
-
-	// 	if (modelType == "3d") {
-	// 		load3dModles();
-	// 	}
-	// 	else if (modelType == "2d") {
-	// 		loadImages();
-	// 	}
-	// 	else if (modelType == "text") {
-	// 		loadText(textAnimeType)
-	// 	}
-	// });
-}
-
-
 
 function type_write(instance) {
 	// (A) SET DEFAULT OPTIONS
