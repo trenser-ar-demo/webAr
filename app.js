@@ -1,15 +1,21 @@
 
 function loadMarkers() {
+	//console.log("body loaded")
 	// Get Query Parameters
 	const urlParams = new URLSearchParams(window.location.search)
 	let imageId = urlParams.get("image")
 	let modelId = urlParams.get("model")
 	let modelType = urlParams.get("type")
 	let textAnimeType = urlParams.get("text_anime_type")
-	console.log(imageId);
-	console.log(modelId);
-	console.log(modelType);
+	// console.log(imageId);
+	// console.log(modelId);
+	// console.log(modelType);
 
+	// const exampleTarget = document.getElementById('#modelEntity');
+
+	// exampleTarget.addEventListener("targetFound", event => {
+	// 	console.log("target located")
+	// });
 
 
 	// Upadate tracking image URL
@@ -21,15 +27,21 @@ function loadMarkers() {
 	var sceneNode = document.getElementById("#scene");
 	sceneNode.setAttribute("mindar-image", imageSample);
 
-	if (modelType == "3d") {
-		load3dModles();
-	}
-	else if (modelType == "2d") {
-		loadImages();
-	}
-	else if (modelType == "text") {
-		loadText(textAnimeType)
-	}
+	const exampleTarget = document.getElementById('#modelEntity');
+
+	exampleTarget.addEventListener("targetFound", event => {
+
+		if (modelType == "3d") {
+			load3dModles();
+		}
+		else if (modelType == "2d") {
+			loadImages();
+		}
+		else if (modelType == "text") {
+			loadText(textAnimeType)
+		}
+	})
+
 }
 
 function load3dModles() {
@@ -107,8 +119,6 @@ function loadImages() {
 	element.appendChild(markerDiv);
 }
 
-
-
 function loadText(anime_type) {
 	const urlParams = new URLSearchParams(window.location.search)
 
@@ -116,7 +126,7 @@ function loadText(anime_type) {
 
 
 	const markerDiv = document.createElement("a-text");
-//	markerDiv.setAttribute("value", modelId);
+	//markerDiv.setAttribute("id", "modelEntity");
 	markerDiv.setAttribute("scale", "1 1 1");
 	markerDiv.setAttribute("color", "#F32505");
 	//	markerDiv.setAttribute("opacity", "0 0 0");
@@ -125,9 +135,13 @@ function loadText(anime_type) {
 	//markerDiv.setAttribute("align", "center");
 	markerDiv.setAttribute("id", "the-text");
 	markerDiv.setAttribute("opacity", "1");
-//	markerDiv.setAttribute("animation", "property:color; to:#0D20EA; dur:20000; loop:true,");
-	
-//	markerDiv.setAttribute("value", modelId);
+	//	markerDiv.setAttribute("animation", "property:color; to:#0D20EA; dur:20000; loop:true,");
+
+	//	markerDiv.setAttribute("value", modelId);
+
+
+	var element = document.getElementById("#modelEntity");
+	element.appendChild(markerDiv);
 
 	/////flashing///////
 	if (anime_type === 'flashing') {
@@ -136,8 +150,7 @@ function loadText(anime_type) {
 	}
 
 
-	var element = document.getElementById("#modelEntity");
-	element.appendChild(markerDiv);
+
 
 
 	/////// Expansion ///////
@@ -216,7 +229,7 @@ function loadText(anime_type) {
 
 	////// typewriter //////
 	if (anime_type === 'type_writer') {
-		tw({
+		type_write({
 			// (C1) REQUIRED
 			target: document.getElementById("the-text"),
 			text: [modelId],
@@ -233,7 +246,30 @@ function loadText(anime_type) {
 
 }
 
-function tw(instance) {
+function applyEvetListener() {
+
+	const exampleTarget = document.getElementById('modelEntity');
+
+	// exampleTarget.addEventListener("targetFound", event => {
+
+	// 	let modelType = urlParams.get("type")
+	// 	let textAnimeType = urlParams.get("text_anime_type")
+
+	// 	if (modelType == "3d") {
+	// 		load3dModles();
+	// 	}
+	// 	else if (modelType == "2d") {
+	// 		loadImages();
+	// 	}
+	// 	else if (modelType == "text") {
+	// 		loadText(textAnimeType)
+	// 	}
+	// });
+}
+
+
+
+function type_write(instance) {
 	// (A) SET DEFAULT OPTIONS
 	if (instance.forward === undefined) { instance.forward = 100; }
 	if (instance.backward === undefined) { instance.backward = 50; }
@@ -262,8 +298,8 @@ function tw(instance) {
 
 		// (C2) DRAW HTML
 		if (instance.draw) {
-			//  console.log("inner html", instance.text[instance.current].substring(0, instance.pointer))
 			//	instance.target.innerHTML = instance.text[instance.current].substring(0, instance.pointer);
+			console.log("currently typed", instance.text[instance.current].substring(0, instance.pointer))
 			instance.target.setAttribute("value", instance.text[instance.current].substring(0, instance.pointer))
 		}
 
