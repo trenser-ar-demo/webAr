@@ -128,7 +128,7 @@ function loadText(anime_type) {
 	const markerDiv = document.createElement("a-text");
 	//markerDiv.setAttribute("id", "modelEntity");
 	markerDiv.setAttribute("scale", "1 1 1");
-	markerDiv.setAttribute("color", "#F32505");
+	markerDiv.setAttribute("color", "#02F997");
 	//	markerDiv.setAttribute("opacity", "0 0 0");
 	//markerDiv.setAttribute("position", "0 0 0");
 	markerDiv.setAttribute("align", "center");
