@@ -137,7 +137,7 @@ function loadText(anime_type) {
 	const markerDiv = document.createElement("a-text");
 	//markerDiv.setAttribute("id", "modelEntity");
 	markerDiv.setAttribute("scale", "1 1 1");
-	markerDiv.setAttribute("color", "#02F997");
+	//markerDiv.setAttribute("color", "#02F997");
 	//	markerDiv.setAttribute("opacity", "0 0 0");
 	//markerDiv.setAttribute("position", "0 0 0");
 	markerDiv.setAttribute("align", "center");
@@ -226,18 +226,11 @@ function loadText(anime_type) {
 	////// color //////
 	if (anime_type === 'color_gradient') {
 		markerDiv.setAttribute("value", modelId);
-		anime({
-			targets: "#the-text",
-
-			duration: 200,
-			loop: true,
-			easing: 'linear'
-		})
-
+		markerDiv.setAttribute("animation", "property: color; from:#BA00FF; to: #FF006C; loop: true; dur: 2000;  dir: alternate;")
 	}
 
 	////// typewriter //////
-	if (anime_type === 'type_writer' ) {
+	if (anime_type === 'type_writer') {
 
 
 		// type_write({
