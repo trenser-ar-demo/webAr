@@ -205,7 +205,7 @@ function loadText(anime_type) {
 	if (anime_type === 'type_writer') {
 		const exampleTarget = document.getElementById('#modelEntity');
 
-		exampleTarget.addEventListener("targetFound", event => {
+	//	exampleTarget.addEventListener("targetFound", event => {
 
 			type_write({
 				// (C1) REQUIRED
@@ -218,7 +218,7 @@ function loadText(anime_type) {
 				loop: true,   // loop typewriter effect, default true
 
 			});
-		})
+		//})
 
 
 	}
@@ -293,11 +293,10 @@ function type_write(instance) {
 	// (D) START
 	instance.timer = setInterval(instance.typist, instance.forward);
 
-	const exampleTarget = document.getElementById('#modelEntity');
-
-	exampleTarget.addEventListener("targetLost", event => {
-		clearTimeout(instance.timer)
-	})
+	// const exampleTarget = document.getElementById('#modelEntity');	
+	// exampleTarget.addEventListener("targetLost", event => {
+	// 	clearTimeout(instance.timer)
+	// })
 
 }
 
