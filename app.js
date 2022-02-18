@@ -1,15 +1,12 @@
 
 function loadMarkers() {
-	//console.log("body loaded")
-	// Get Query Parameters
+
 	const urlParams = new URLSearchParams(window.location.search)
 	let imageId = urlParams.get("image")
 	let modelId = urlParams.get("model")
 	let modelType = urlParams.get("type")
 	let textAnimeType = urlParams.get("text_anime_type")
-	// console.log(imageId);
-	// console.log(modelId);
-	// console.log(modelType);
+
 
 	// const exampleTarget = document.getElementById('#modelEntity');
 
@@ -135,19 +132,11 @@ function loadText(anime_type) {
 
 
 	const markerDiv = document.createElement("a-text");
-	//markerDiv.setAttribute("id", "modelEntity");
 	markerDiv.setAttribute("scale", "1 1 1");
-	//markerDiv.setAttribute("color", "#02F997");
-	//	markerDiv.setAttribute("opacity", "0 0 0");
-	//markerDiv.setAttribute("position", "0 0 0");
 	markerDiv.setAttribute("align", "center");
-	//markerDiv.setAttribute("align", "center");
 	markerDiv.setAttribute("id", "the-text");
 	markerDiv.setAttribute("opacity", "1");
-	markerDiv.setAttribute("value", " ");
-
-
-
+	markerDiv.setAttribute("color", "red");
 
 	var element = document.getElementById("#modelEntity");
 	element.appendChild(markerDiv);
@@ -157,10 +146,6 @@ function loadText(anime_type) {
 		markerDiv.setAttribute("value", modelId);
 		markerDiv.setAttribute("animation", "property: opacity; to: 0; loop: true; dur: 500")
 	}
-
-
-
-
 
 	/////// Expansion ///////
 
@@ -172,28 +157,15 @@ function loadText(anime_type) {
 				{ value: "1, 1, 1" },
 				{ value: "1.4, 0.8, 1" },
 				{ value: "0.8, 1.4, 1" },
-				{ value: "1.1, 0.8, 1" },
+				{ value: "1.4, 0.8, 1" },
 				{ value: "0.8, 1.4, 1" },
-				{ value: "1, 1, 1" },
+
 			],
-			duration: 2000,
+			duration: 3000,
 			loop: true,
-			easing: 'linear'
+			easing: 'linear',
+			direction: 'alternate',
 		})
-		// anime({
-		// 	targets: "#the-text",
-		// 	keyframes: [
-		// 		{ scale: "1, 1, 1" },
-		// 		{ scale: "1.4, 0.8, 1" },
-		// 		{ scale: "0.8, 1.4, 1" },
-		// 		{ scale: "1.1, 0.8, 1" },
-		// 		{ scale: "0.8, 1.4, 1" },
-		// 		{ scale: "1, 1, 1" },
-		// 	],
-		// 	duration: 2000,
-		// 	loop: true,
-		// 	easing: 'linear'
-		// })
 
 	}
 
@@ -231,23 +203,10 @@ function loadText(anime_type) {
 
 	////// typewriter //////
 	if (anime_type === 'type_writer') {
-
-
-		// type_write({
-		// 	// (C1) REQUIRED
-		// 	target: document.getElementById("the-text"),
-		// 	text: [modelId],
-		// 	// (C2) OPTIONAL
-		// 	forward: 500,  // delay between each character, default 100 ms
-		// 	backward: 200, // delay between each character, default 50 ms
-		// 	pause: 2000,  // pause before next cycle, default 1 sec
-		// 	loop: true,   // loop typewriter effect, default true
-		// 	cursor: false  // add fake cursor? default true
-		// });
-
 		const exampleTarget = document.getElementById('#modelEntity');
+
 		exampleTarget.addEventListener("targetFound", event => {
-			//console.log("called")
+
 			type_write({
 				// (C1) REQUIRED
 				target: document.getElementById("the-text"),
@@ -255,12 +214,11 @@ function loadText(anime_type) {
 				// (C2) OPTIONAL
 				forward: 500,  // delay between each character, default 100 ms
 				backward: 200, // delay between each character, default 50 ms
-				pause: 2000,  // pause before next cycle, default 1 sec
+				pause: 1000,  // pause before next cycle, default 1 sec
 				loop: true,   // loop typewriter effect, default true
-				cursor: false  // add fake cursor? default true
+
 			});
 		})
-
 
 
 	}
@@ -268,13 +226,14 @@ function loadText(anime_type) {
 
 }
 
+
 function type_write(instance) {
 	// (A) SET DEFAULT OPTIONS
+
 	if (instance.forward === undefined) { instance.forward = 100; }
 	if (instance.backward === undefined) { instance.backward = 50; }
 	if (instance.pause === undefined) { instance.pause = 1000; }
 	if (instance.loop === undefined) { instance.loop = true; }
-	if (instance.cursor === undefined) { instance.cursor = true; }
 	if (typeof instance.text != "object") { instance.text = [instance.text]; }
 
 	// (B) PROPERTIES & FLAGS
@@ -284,7 +243,7 @@ function type_write(instance) {
 	instance.draw = true;      // continue to "type text"?
 
 	// (C) TYPEWRITER EFFECT
-	if (instance.cursor) { instance.target.classList.add("cursor"); }
+
 	instance.typist = () => {
 		// (C1) NEXT CHARACTER
 		if (instance.direction) {
@@ -298,7 +257,7 @@ function type_write(instance) {
 		// (C2) DRAW HTML
 		if (instance.draw) {
 			//	instance.target.innerHTML = instance.text[instance.current].substring(0, instance.pointer);
-			console.log("currently typed", instance.text[instance.current].substring(0, instance.pointer))
+			//console.log("currently typed", instance.text[instance.current].substring(0, instance.pointer))
 			instance.target.setAttribute("value", instance.text[instance.current].substring(0, instance.pointer))
 		}
 
@@ -333,4 +292,13 @@ function type_write(instance) {
 
 	// (D) START
 	instance.timer = setInterval(instance.typist, instance.forward);
+
+	const exampleTarget = document.getElementById('#modelEntity');
+
+	exampleTarget.addEventListener("targetLost", event => {
+		clearTimeout(instance.timer)
+	})
+
 }
+
+
