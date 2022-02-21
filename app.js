@@ -155,11 +155,11 @@ function loadText(anime_type) {
 		anime({
 			targets: "#the-text",
 			scale: [
-				{ value: "1, 1, 1" },
-				{ value: "1.4, 0.8, 1" },
-				{ value: "0.8, 1.4, 1" },
-				{ value: "1.4, 0.8, 1" },
-				{ value: "0.8, 1.4, 1" },
+				{ value: "0.2, 0.2, 0.2" },
+				{ value: "0.7, 0.2, 0.2" },
+				{ value: "0.2, 0.8, 0.5" },
+				{ value: "0.7, 0.4, 0.5" },
+				{ value: "0.4, 0.7, 0.5" },
 
 			],
 			duration: 3000,
@@ -204,7 +204,7 @@ function loadText(anime_type) {
 
 	////// typewriter //////
 	if (anime_type === 'type_writer') {
-		
+
 		//const exampleTarget = document.getElementById('#modelEntity');
 		// exampleTarget.addEventListener("targetFound", event => {	
 		// })
