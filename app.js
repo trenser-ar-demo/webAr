@@ -47,6 +47,9 @@ function loadMarkers() {
 	else if (modelType == "text") {
 		loadText(textAnimeType)
 	}
+	else if (modelType == "bg_filter") {
+		loadFilter();
+	}
 
 }
 
@@ -300,4 +303,26 @@ function type_write(instance) {
 
 }
 
+function loadFilter () {
+	const urlParams = new URLSearchParams(window.location.search)
+	let modelId = urlParams.get("model")
 
+	const aImage = document.createElement("a-image");
+	aImage.setAttribute("id", "#modelEntaImage");
+	var element = document.getElementById("#modelEntity");
+	element.appendChild(aImage);
+
+	const gifImage = document.getElementById("gifimage");
+	const gimImageAsset = document.getElementById("gifImageAsset");
+	const markerDiv = document.createElement("a-entity");
+
+ if (modelId == "2") {
+		gimImageAsset.setAttribute("src", "models/Image/moon.jpg");
+		aImage.setAttribute("material", "src:#gifImageAsset");
+		markerDiv.setAttribute("scale", "3 3 3");
+	}
+
+
+	var element = document.getElementById("#modelEntity");
+	element.appendChild(markerDiv);
+}
