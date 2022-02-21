@@ -84,6 +84,7 @@ function load3dModles() {
 }
 
 function loadImages() {
+
 	const urlParams = new URLSearchParams(window.location.search)
 	let modelId = urlParams.get("model")
 
@@ -132,7 +133,7 @@ function loadText(anime_type) {
 
 
 	const markerDiv = document.createElement("a-text");
-	markerDiv.setAttribute("scale", "1 1 1");
+	markerDiv.setAttribute("scale", "0.5 0.5 0.5");
 	markerDiv.setAttribute("align", "center");
 	markerDiv.setAttribute("id", "the-text");
 	markerDiv.setAttribute("opacity", "1");
@@ -204,28 +205,26 @@ function loadText(anime_type) {
 	////// typewriter //////
 	if (anime_type === 'type_writer') {
 		
-		const exampleTarget = document.getElementById('#modelEntity');
-		exampleTarget.addEventListener("targetFound", event => {	
-			alert("working")
-		})
+		//const exampleTarget = document.getElementById('#modelEntity');
+		// exampleTarget.addEventListener("targetFound", event => {	
+		// })
 
-		// type_write({
-		// 	// (C1) REQUIRED
-		// 	target: document.getElementById("the-text"),
-		// 	text: [modelId],
-		// 	// (C2) OPTIONAL
-		// 	forward: 500,  // delay between each character, default 100 ms
-		// 	backward: 200, // delay between each character, default 50 ms
-		// 	pause: 1000,  // pause before next cycle, default 1 sec
-		// 	loop: true,   // loop typewriter effect, default true
+		type_write({
+			// (C1) REQUIRED
+			target: document.getElementById("the-text"),
+			text: [modelId],
+			// (C2) OPTIONAL
+			forward: 500,  // delay between each character, default 100 ms
+			backward: 200, // delay between each character, default 50 ms
+			pause: 1000,  // pause before next cycle, default 1 sec
+			loop: true,   // loop typewriter effect, default true
 
-		// });
+		});
 
 	}
 
 
 }
-
 
 function type_write(instance) {
 	// (A) SET DEFAULT OPTIONS
