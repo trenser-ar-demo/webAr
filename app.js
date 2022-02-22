@@ -317,7 +317,7 @@ function loadFilter () {
 	const markerDiv = document.createElement("a-entity");
 
  if (modelId == "2") {
-		gimImageAsset.setAttribute("src", "models/Image/moon.jpg");
+		gimImageAsset.setAttribute("src", "models/Image/croped.png");
 		aImage.setAttribute("material", "src:#gifImageAsset");
 		aImage.setAttribute("height", "6");
 		aImage.setAttribute("width", "6");
