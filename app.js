@@ -155,7 +155,7 @@ function loadText(anime_type) {
 		anime({
 			targets: "#the-text",
 			scale: [
-				{ value: "0.2, 0.2, 0.2" },
+				{ value: "0.5, 0.5, 0.5" },
 				{ value: "0.7, 0.2, 0.2" },
 				{ value: "0.2, 0.8, 0.5" },
 				{ value: "0.7, 0.4, 0.5" },
