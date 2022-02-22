@@ -319,7 +319,8 @@ function loadFilter () {
  if (modelId == "2") {
 		gimImageAsset.setAttribute("src", "models/Image/moon.jpg");
 		aImage.setAttribute("material", "src:#gifImageAsset");
-		markerDiv.setAttribute("scale", "3 3 3");
+		aImage.setAttribute("height", "6");
+		aImage.setAttribute("width", "6");
 	}
 
 
