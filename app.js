@@ -207,7 +207,7 @@ function loadText(anime_type) {
 
 	////// typewriter //////
 	if (anime_type === 'type_writer') {
-		
+
 		//const exampleTarget = document.getElementById('#modelEntity');
 		// exampleTarget.addEventListener("targetFound", event => {	
 		// })
@@ -303,27 +303,31 @@ function type_write(instance) {
 
 }
 
-function loadFilter () {
+function loadFilter() {
 	const urlParams = new URLSearchParams(window.location.search)
-	let modelId = urlParams.get("model")
+	let type = urlParams.get("model")
 
-	const aImage = document.createElement("a-image");
-	aImage.setAttribute("id", "#modelEntaImage");
-	var element = document.getElementById("#modelEntity");
-	element.appendChild(aImage);
 
-	const gifImage = document.getElementById("gifimage");
-	const gimImageAsset = document.getElementById("gifImageAsset");
-	const markerDiv = document.createElement("a-entity");
 
- if (modelId == "2") {
-		gimImageAsset.setAttribute("src", "models/Image/croped.png");
-		aImage.setAttribute("material", "src:#gifImageAsset");
-		aImage.setAttribute("height", "6");
-		aImage.setAttribute("width", "6");
+	if (type == "monochrome") {
+		
+		const sceneEl = document.querySelector('a-scene');
+		sceneEl.addEventListener("arReady", (event) => {
+			var vid = document.getElementsByTagName('video'); // returns an array of elements with given tag 
+			vid[0].style.filter = "grayscale(100%)"
+
+		});
+	}
+	
+	if (type == "blur") {
+		
+		const sceneEl = document.querySelector('a-scene');
+		sceneEl.addEventListener("arReady", (event) => {
+			var vid = document.getElementsByTagName('video'); // returns an array of elements with given tag 
+			vid[0].style.filter = "blur(7px)"
+
+		});
 	}
 
 
-	var element = document.getElementById("#modelEntity");
-	element.appendChild(markerDiv);
 }
