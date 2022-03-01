@@ -310,24 +310,72 @@ function loadFilter() {
 
 
 	if (type == "monochrome") {
-		
+
 		const sceneEl = document.querySelector('a-scene');
 		sceneEl.addEventListener("arReady", (event) => {
 			var vid = document.getElementsByTagName('video'); // returns an array of elements with given tag 
 			vid[0].style.filter = "grayscale(100%)"
+			let vidoFile = vid[0];
 
+			var imageData = vidoFile.getImageData(0, 0, vidoFile.width, vidoFile.height);
+			console.log("image log", imageData)
 		});
+
+
+		// const constraints = {
+		// 	video: { width: { exact: 640 }, height: { exact: 480 } },
+		//   }
+
+		// navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+		// 	console.log("stream loging", stream)
+		// });
+
+		// sceneEl.addEventListener("onUpdate", event => {
+		// 	console.log("target found",event);
+		//   });
 	}
-	
+
 	if (type == "blur") {
-		
+
 		const sceneEl = document.querySelector('a-scene');
 		sceneEl.addEventListener("arReady", (event) => {
 			var vid = document.getElementsByTagName('video'); // returns an array of elements with given tag 
 			vid[0].style.filter = "blur(7px)"
 
 		});
+
+
+
+	}
+	if (type == "sepia") {
+
+		const sceneEl = document.querySelector('a-scene');
+		sceneEl.addEventListener("arReady", (event) => {
+			var vid = document.getElementsByTagName('video'); // returns an array of elements with given tag 
+			vid[0].style.filter = "sepia(100%)"
+
+		});
+
+
+
 	}
 
+	if (type == "colors") {
+
+		const aImage = document.createElement("a-image");
+		const colors = ["background_filters/colors/AR_ColorFilter_blue.gif",
+			"background_filters/colors/AR_ColorFilter_pale.gif",
+			"background_filters/colors/AR_ColorFilter_red.gif",
+			"background_filters/colors/AR_ColorFilter_yellow.gif"]
+
+		var intervalId = window.setInterval(function () {
+			aImage.setAttribute("src", colors[Math.floor(Math.random() * colors.length)]);
+		}, 1000);
+
+		aImage.setAttribute("scale", "6 6 6");
+
+		var element = document.getElementById("#modelEntity");
+		element.appendChild(aImage);
+	}
 
 }
