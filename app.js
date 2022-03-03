@@ -127,9 +127,12 @@ function loadImages() {
 
 	var element = document.getElementById("#modelEntity");
 	element.appendChild(markerDiv);
+
+	//console.log("scene rect", document.getElementById('#scene').getBoundingClientRect())
 }
 
 function loadText(anime_type) {
+
 	const urlParams = new URLSearchParams(window.location.search)
 
 	let modelId = urlParams.get("model")
@@ -307,32 +310,80 @@ function loadFilter() {
 	const urlParams = new URLSearchParams(window.location.search)
 	let type = urlParams.get("model")
 
-
-
 	if (type == "monochrome") {
+		var canvas;
+		var context;
+		var video;
 
+		// const sceneEl = document.querySelector('a-scene');
+		// sceneEl.addEventListener("arReady", (event) => {
+		// 	var vid = document.getElementsByTagName('video'); // returns an array of elements with given tag 
+		// 	vid[0].style.filter = "grayscale(100%)"
+		// 	let vidoFile = vid[0];
+
+		// 	var imageData = vidoFile.getImageData(0, 0, vidoFile.width, vidoFile.height);
+		// 	console.log("image log", imageData)
+		// });
 		const sceneEl = document.querySelector('a-scene');
 		sceneEl.addEventListener("arReady", (event) => {
-			var vid = document.getElementsByTagName('video'); // returns an array of elements with given tag 
-			vid[0].style.filter = "grayscale(100%)"
-			let vidoFile = vid[0];
+			canvas = document.getElementById('Canvas');
+			//canvas = document.getElementsByTagName('canvas')[1]
+			//console.log("canvas",canvas)
+			context = canvas.getContext('2d');
+			video = document.getElementsByTagName('video')[0];
 
-			var imageData = vidoFile.getImageData(0, 0, vidoFile.width, vidoFile.height);
-			console.log("image log", imageData)
+			readyToPlay()
 		});
 
 
-		// const constraints = {
-		// 	video: { width: { exact: 640 }, height: { exact: 480 } },
-		//   }
 
-		// navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
-		// 	console.log("stream loging", stream)
-		// });
 
-		// sceneEl.addEventListener("onUpdate", event => {
-		// 	console.log("target found",event);
-		//   });
+
+
+		function readyToPlay() {
+			// Set the canvas the same width and height of the video
+			canvas.width = video.videoWidth;
+			canvas.height = video.videoHeight;
+			// Play video
+			video.play();
+			video.style.display = "none"
+			drawFrame(video);
+		}
+
+		function drawFrame(video) {
+			context.drawImage(video, 0, 0);
+
+			var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+
+			invertColors(imageData.data);
+			context.putImageData(imageData, 0, 0);
+
+			setTimeout(function () {
+				drawFrame(video);
+			}, 10);
+		}
+
+		function invertColors(data) {
+			//console.log("image data",data)
+			// for (var i = 0; i < data.length/2; i += 4) {
+			// 	data[i] = data[i] ^ 255;
+			// 	data[i + 1] = data[i + 1] ^ 255;
+			// 	data[i + 2] = data[i + 2] ^ 255;
+			// }
+		//	let pixels = data;
+			for (var i = 0; i < data.length/2; i += 4) {
+		  
+			  let lightness = parseInt((data[i] + data[i + 1] + data[i + 2]) / 3);
+		  
+			  data[i] = lightness;
+			  data[i + 1] = lightness;
+			  data[i + 2] = lightness;
+			}
+		}
+
+
+		
+
 	}
 
 	if (type == "blur") {
