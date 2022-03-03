@@ -423,7 +423,8 @@ function loadFilter() {
 			aImage.setAttribute("src", colors[Math.floor(Math.random() * colors.length)]);
 		}, 1000);
 
-		aImage.setAttribute("scale", "7 7 7");
+		aImage.setAttribute("scale", "8 8 0");
+		aImage.setAttribute("position", "0 0 0");
 
 		var element = document.getElementById("#modelEntity");
 		element.appendChild(aImage);
