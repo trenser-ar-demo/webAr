@@ -49,6 +49,7 @@ function loadMarkers() {
 	}
 	else if (modelType == "bg_filter") {
 		loadFilter();
+		//loadPlane()
 	}
 
 }
@@ -311,79 +312,48 @@ function loadFilter() {
 	let type = urlParams.get("model")
 
 	if (type == "monochrome") {
-		var canvas;
-		var context;
-		var video;
-
-		// const sceneEl = document.querySelector('a-scene');
-		// sceneEl.addEventListener("arReady", (event) => {
-		// 	var vid = document.getElementsByTagName('video'); // returns an array of elements with given tag 
-		// 	vid[0].style.filter = "grayscale(100%)"
-		// 	let vidoFile = vid[0];
-
-		// 	var imageData = vidoFile.getImageData(0, 0, vidoFile.width, vidoFile.height);
-		// 	console.log("image log", imageData)
-		// });
+		
 		const sceneEl = document.querySelector('a-scene');
 		sceneEl.addEventListener("arReady", (event) => {
 			canvas = document.getElementById('Canvas');
-			//canvas = document.getElementsByTagName('canvas')[1]
-			//console.log("canvas",canvas)
 			context = canvas.getContext('2d');
 			video = document.getElementsByTagName('video')[0];
-
-			readyToPlay()
+			video.style.filter = "grayscale(100%)"
+		//	readyToPlay()
 		});
 
+		// function readyToPlay() {
 
+		// 	canvas.width = video.videoWidth;
+		// 	canvas.height = video.videoHeight;
+		// 	// Play video
+		// 	video.play();
+		// 	video.style.display = "none"
+		// 	drawFrame(video);
+		// }
 
+		// function drawFrame(video) {
+		// 	context.drawImage(video, 0, 0);
 
+		// 	var imageData = context.getImageData(0, 0, canvas.width, canvas.height);			
+		// 	invertColors(imageData.data);
+		// 	context.putImageData(imageData, 0, 0);
 
+		// 	setTimeout(function () {
+		// 		drawFrame(video);
+		// 	}, 10);
+		// }
 
-		function readyToPlay() {
-			// Set the canvas the same width and height of the video
-			canvas.width = video.videoWidth;
-			canvas.height = video.videoHeight;
-			// Play video
-			video.play();
-			video.style.display = "none"
-			drawFrame(video);
-		}
+		// function invertColors(data) {
+		// 	for (var i = 0; i < data.length; i += 4) {
 
-		function drawFrame(video) {
-			context.drawImage(video, 0, 0);
+		// 			let lightness = parseInt((data[i] + data[i + 1] + data[i + 2]) / 3);
+		// 			data[i] = lightness;
+		// 			data[i + 1] = lightness;
+		// 			data[i + 2] = lightness;
 
-			var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-
-			invertColors(imageData.data);
-			context.putImageData(imageData, 0, 0);
-
-			setTimeout(function () {
-				drawFrame(video);
-			}, 10);
-		}
-
-		function invertColors(data) {
-			//console.log("image data",data)
-			// for (var i = 0; i < data.length/2; i += 4) {
-			// 	data[i] = data[i] ^ 255;
-			// 	data[i + 1] = data[i + 1] ^ 255;
-			// 	data[i + 2] = data[i + 2] ^ 255;
-			// }
-		//	let pixels = data;
-			for (var i = 0; i < data.length/2; i += 4) {
-		  
-			  let lightness = parseInt((data[i] + data[i + 1] + data[i + 2]) / 3);
-		  
-			  data[i] = lightness;
-			  data[i + 1] = lightness;
-			  data[i + 2] = lightness;
-			}
-		}
-
-
-		
-
+		// 	}
+		// }
 	}
 
 	if (type == "blur") {
@@ -411,23 +381,53 @@ function loadFilter() {
 
 	}
 
-	if (type == "colors") {
-
-		const aImage = document.createElement("a-image");
-		const colors = ["background_filters/colors/AR_ColorFilter_blue.gif",
-			"background_filters/colors/AR_ColorFilter_pale.gif",
-			"background_filters/colors/AR_ColorFilter_red.gif",
-			"background_filters/colors/AR_ColorFilter_yellow.gif"]
-
-		var intervalId = window.setInterval(function () {
-			aImage.setAttribute("src", colors[Math.floor(Math.random() * colors.length)]);
-		}, 1000);
-
-		aImage.setAttribute("scale", "8.5 8.5 0");
+	if (type == "red") {
+		const aImage = document.createElement("a-image");	
+		aImage.setAttribute("src","background_filters/colors/AR_ColorFilter_red.gif");
+		aImage.setAttribute("height", "7");
+		aImage.setAttribute("width", "7");
 		aImage.setAttribute("position", "0 0 0");
-
 		var element = document.getElementById("#modelEntity");
 		element.appendChild(aImage);
 	}
+	if (type == "blue") {
+		const aImage = document.createElement("a-image");		
+		aImage.setAttribute("src","background_filters/colors/AR_ColorFilter_blue.gif");
+		aImage.setAttribute("height", "7");
+		aImage.setAttribute("width", "7");
+		aImage.setAttribute("position", "0 0 0");
+		var element = document.getElementById("#modelEntity");
+		element.appendChild(aImage);
+	}
+	if (type == "pale") {
+		const aImage = document.createElement("a-image");	
+		aImage.setAttribute("src","background_filters/colors/AR_ColorFilter_pale.gif");
+		aImage.setAttribute("height", "7");
+		aImage.setAttribute("width", "7");
+		aImage.setAttribute("position", "0 0 0");
+		var element = document.getElementById("#modelEntity");
+		element.appendChild(aImage);
+	}
+	if (type == "yellow") {
+		const aImage = document.createElement("a-image");		
+		aImage.setAttribute("src","background_filters/colors/AR_ColorFilter_yellow.gif");
+		aImage.setAttribute("height", "7");
+		aImage.setAttribute("width", "7");
+		aImage.setAttribute("position", "0 0 0");
+		var element = document.getElementById("#modelEntity");
+		element.appendChild(aImage);
+	}
+}
 
+function loadPlane() {
+
+	const urlParams = new URLSearchParams(window.location.search)
+
+
+	const markerDiv = document.createElement("a-plane");
+
+	var element = document.getElementById("#modelEntity");
+	element.appendChild(markerDiv);
+
+	//console.log("scene rect", document.getElementById('#scene').getBoundingClientRect())
 }
