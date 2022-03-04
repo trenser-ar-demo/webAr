@@ -330,8 +330,8 @@ function loadFilter() {
 	if (type == "red") {
 		const aImage = document.createElement("a-image");	
 		aImage.setAttribute("src","background_filters/colors/AR_ColorFilter_red.gif");
-		aImage.setAttribute("height", "1");
-		aImage.setAttribute("width", "1");
+		aImage.setAttribute("height", "7");
+		aImage.setAttribute("width", "7");
 		aImage.setAttribute("position", "0 0 0");
 		var element = document.getElementById("#modelEntity");
 		element.appendChild(aImage);
