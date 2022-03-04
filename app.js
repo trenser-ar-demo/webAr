@@ -8,14 +8,6 @@ function loadMarkers() {
 	let textAnimeType = urlParams.get("text_anime_type")
 
 
-	// const exampleTarget = document.getElementById('#modelEntity');
-
-	// exampleTarget.addEventListener("targetFound", event => {
-	// 	console.log("target located")
-	// });
-
-
-	// Upadate tracking image URL
 	let baseUrl = "https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/trensertest/webar-demo/main/track/";
 	let imageSample = baseUrl + imageId + ".mind;";
 	imageSample = "imageTargetSrc: " + imageSample;
@@ -24,19 +16,6 @@ function loadMarkers() {
 	var sceneNode = document.getElementById("#scene");
 	sceneNode.setAttribute("mindar-image", imageSample);
 
-	// const exampleTarget = document.getElementById('#modelEntity');
-	// exampleTarget.addEventListener("targetFound", event => {
-
-	// 	if (modelType == "3d") {
-	// 		load3dModles();
-	// 	}
-	// 	else if (modelType == "2d") {
-	// 		loadImages();
-	// 	}
-	// 	else if (modelType == "text") {
-	// 		loadText(textAnimeType)
-	// 	}
-	// })
 
 	if (modelType == "3d") {
 		load3dModles();
@@ -49,7 +28,7 @@ function loadMarkers() {
 	}
 	else if (modelType == "bg_filter") {
 		loadFilter();
-		//loadPlane()
+		
 	}
 
 }
@@ -315,45 +294,12 @@ function loadFilter() {
 		
 		const sceneEl = document.querySelector('a-scene');
 		sceneEl.addEventListener("arReady", (event) => {
-			canvas = document.getElementById('Canvas');
-			context = canvas.getContext('2d');
 			video = document.getElementsByTagName('video')[0];
 			video.style.filter = "grayscale(100%)"
-		//	readyToPlay()
+	
 		});
 
-		// function readyToPlay() {
 
-		// 	canvas.width = video.videoWidth;
-		// 	canvas.height = video.videoHeight;
-		// 	// Play video
-		// 	video.play();
-		// 	video.style.display = "none"
-		// 	drawFrame(video);
-		// }
-
-		// function drawFrame(video) {
-		// 	context.drawImage(video, 0, 0);
-
-		// 	var imageData = context.getImageData(0, 0, canvas.width, canvas.height);			
-		// 	invertColors(imageData.data);
-		// 	context.putImageData(imageData, 0, 0);
-
-		// 	setTimeout(function () {
-		// 		drawFrame(video);
-		// 	}, 10);
-		// }
-
-		// function invertColors(data) {
-		// 	for (var i = 0; i < data.length; i += 4) {
-
-		// 			let lightness = parseInt((data[i] + data[i + 1] + data[i + 2]) / 3);
-		// 			data[i] = lightness;
-		// 			data[i + 1] = lightness;
-		// 			data[i + 2] = lightness;
-
-		// 	}
-		// }
 	}
 
 	if (type == "blur") {
@@ -384,8 +330,8 @@ function loadFilter() {
 	if (type == "red") {
 		const aImage = document.createElement("a-image");	
 		aImage.setAttribute("src","background_filters/colors/AR_ColorFilter_red.gif");
-		aImage.setAttribute("height", "7");
-		aImage.setAttribute("width", "7");
+		aImage.setAttribute("height", "1");
+		aImage.setAttribute("width", "1");
 		aImage.setAttribute("position", "0 0 0");
 		var element = document.getElementById("#modelEntity");
 		element.appendChild(aImage);
@@ -425,6 +371,7 @@ function loadPlane() {
 
 
 	const markerDiv = document.createElement("a-plane");
+	markerDiv.setAttribute("mindar-image-target" , "targetIndex: 5")
 
 	var element = document.getElementById("#modelEntity");
 	element.appendChild(markerDiv);
