@@ -36,7 +36,7 @@ function loadMarkers() {
 	else if (modelType == "text") {
 		loadText(textAnimeType)
 	}
-	else if (modelType == "bg_filter") {
+	else if (modelType == "bgfilter") {
 		loadFilter();
 		
 	}
@@ -290,7 +290,7 @@ function loadFilter() {
 	const urlParams = new URLSearchParams(window.location.search)
 	let type = urlParams.get("model")
 
-	if (type == "red") {
+	if (type == "colorfilter_red") {
 		const aImage = document.createElement("a-image");	
 		aImage.setAttribute("src","background_filters/colors/AR_ColorFilter_red.gif");
 		aImage.setAttribute("height", "7");
@@ -299,7 +299,7 @@ function loadFilter() {
 		var element = document.getElementById("#modelEntity");
 		element.appendChild(aImage);
 	}
-	if (type == "blue") {
+	if (type == "colorfilter_blue") {
 		const aImage = document.createElement("a-image");		
 		aImage.setAttribute("src","background_filters/colors/AR_ColorFilter_blue.gif");
 		aImage.setAttribute("height", "7");
@@ -308,7 +308,7 @@ function loadFilter() {
 		var element = document.getElementById("#modelEntity");
 		element.appendChild(aImage);
 	}
-	if (type == "pale") {
+	if (type == "colorfilter_pale") {
 		const aImage = document.createElement("a-image");	
 		aImage.setAttribute("src","background_filters/colors/AR_ColorFilter_pale.gif");
 		aImage.setAttribute("height", "7");
@@ -317,7 +317,7 @@ function loadFilter() {
 		var element = document.getElementById("#modelEntity");
 		element.appendChild(aImage);
 	}
-	if (type == "yellow") {
+	if (type == "colorfilter_yellow") {
 		const aImage = document.createElement("a-image");		
 		aImage.setAttribute("src","background_filters/colors/AR_ColorFilter_yellow.gif");
 		aImage.setAttribute("height", "7");
