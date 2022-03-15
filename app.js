@@ -103,12 +103,15 @@ document.addEventListener("DOMContentLoaded", function () {
 		const sw = video.videoWidth - sx * 2;
 		const sh = video.videoHeight - sy * 2;
 
-		context.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
-
-		renderer.preserveDrawingBuffer = true;
+		setInterval(function(){
+			context.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+				renderer.preserveDrawingBuffer = true;
 		renderer.render(scene, camera); // empty if not run
 		context.drawImage(renderCanvas, 0, 0, canvas.width, canvas.height);
 		renderer.preserveDrawingBuffer = false;
+		},100);
+		
+	
 
 		var videoStream = canvas.captureStream(30);
 		var mediaRecorder = new MediaRecorder(videoStream);
