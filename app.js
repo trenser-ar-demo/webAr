@@ -1,4 +1,14 @@
 
+window.addEventListener('DOMContentLoaded', (event) => {
+	const sceneEl = document.querySelector('a-scene');
+	const arSystem = sceneEl.systems["mindar-image-system"];
+	const switchCameraButton = document.querySelector("#switch-camera-button");
+  
+	switchCameraButton.addEventListener('click', () => {
+	  arSystem.switchCamera();
+	});
+});
+
 function loadMarkers() {
 
 	const urlParams = new URLSearchParams(window.location.search)
@@ -182,18 +192,10 @@ function loadText(anime_type) {
 
 	}
 
-	////// color //////
-	if (anime_type === 'color_gradient') {
-		markerDiv.setAttribute("value", modelId);
-		markerDiv.setAttribute("animation", "property: color; from:#BA00FF; to: #FF006C; loop: true; dur: 2000;  dir: alternate;")
-	}
 
 	////// typewriter //////
 	if (anime_type === 'type_writer') {
 
-		//const exampleTarget = document.getElementById('#modelEntity');
-		// exampleTarget.addEventListener("targetFound", event => {	
-		// })
 
 		type_write({
 			// (C1) REQUIRED
@@ -241,8 +243,6 @@ function type_write(instance) {
 
 		// (C2) DRAW HTML
 		if (instance.draw) {
-			//	instance.target.innerHTML = instance.text[instance.current].substring(0, instance.pointer);
-			//console.log("currently typed", instance.text[instance.current].substring(0, instance.pointer))
 			instance.target.setAttribute("value", instance.text[instance.current].substring(0, instance.pointer))
 		}
 
@@ -290,43 +290,6 @@ function loadFilter() {
 	const urlParams = new URLSearchParams(window.location.search)
 	let type = urlParams.get("model")
 
-	if (type == "monochrome") {
-		
-		const sceneEl = document.querySelector('a-scene');
-		sceneEl.addEventListener("arReady", (event) => {
-			video = document.getElementsByTagName('video')[0];
-			video.style.filter = "grayscale(100%)"
-	
-		});
-
-
-	}
-
-	if (type == "blur") {
-
-		const sceneEl = document.querySelector('a-scene');
-		sceneEl.addEventListener("arReady", (event) => {
-			var vid = document.getElementsByTagName('video'); // returns an array of elements with given tag 
-			vid[0].style.filter = "blur(7px)"
-
-		});
-
-
-
-	}
-	if (type == "sepia") {
-
-		const sceneEl = document.querySelector('a-scene');
-		sceneEl.addEventListener("arReady", (event) => {
-			var vid = document.getElementsByTagName('video'); // returns an array of elements with given tag 
-			vid[0].style.filter = "sepia(100%)"
-
-		});
-
-
-
-	}
-
 	if (type == "red") {
 		const aImage = document.createElement("a-image");	
 		aImage.setAttribute("src","background_filters/colors/AR_ColorFilter_red.gif");
@@ -365,16 +328,3 @@ function loadFilter() {
 	}
 }
 
-function loadPlane() {
-
-	const urlParams = new URLSearchParams(window.location.search)
-
-
-	const markerDiv = document.createElement("a-plane");
-	markerDiv.setAttribute("mindar-image-target" , "targetIndex: 5")
-
-	var element = document.getElementById("#modelEntity");
-	element.appendChild(markerDiv);
-
-	//console.log("scene rect", document.getElementById('#scene').getBoundingClientRect())
-}
