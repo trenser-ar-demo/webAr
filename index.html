@@ -55,7 +55,22 @@
       overflow: hidden
     }
 
-    #capture {
+    #capture_button_container {
+      position: fixed;
+      bottom: 2vh;
+      width: 100%;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .capture_buttons {
+      height: 12vw;
+      width: 12vw;
+      border: solid 2px;
+      border-radius: 50%;
+    }
+
+    /* #capture {
       position: fixed;
       bottom: 2vh;
       left: 50%;
@@ -65,7 +80,7 @@
       border-radius: 50%;
       transform: translateX(-50%);
       z-index: 10;
-    }
+    } */
 
     #preview {
       position: fixed;
@@ -117,14 +132,21 @@
 <body onload="loadMarkers()">
 
   <div style="position: absolute; z-index: 1000; margin: 20px;">
-    <button  id="record-button">Record</button>
-
+    <button id="record-button">Record</button>
   </div>
 
-  <button id="capture"></button>
+  <div id="capture_button_container">
+    <div>
+      <button id="capture" class="capture_buttons">Photo</button>
+      <button class="capture_buttons">Video</button>
+    </div>
+  </div>
+
+
   <div id="preview">
     <div id="preview-close">X</div>
     <img id="preview-image" />
+    <!-- <video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" ></video> -->
     <div id="preview-share">Share</div>
   </div>
 
