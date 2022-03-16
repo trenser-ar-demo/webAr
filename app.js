@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			previewVideo.play()
 
 			SharePreviewVideo.addEventListener("click", () => {
-				const file = new File([blob], "video.mp4", { type: "video/mp4" })
+				const file = new File([blob], "AR_video.mp4", { type: "video/mp4" })
 				const files = [file];
 				if (navigator.canShare && navigator.canShare({ files })) {
 					navigator.share({
