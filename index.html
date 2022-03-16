@@ -82,6 +82,19 @@
       z-index: 10;
     } */
 
+    #video-share {
+      position: fixed;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      visibility: hidden;
+
+    }
+
     #preview {
       position: fixed;
       z-index: 10;
@@ -97,6 +110,11 @@
       width: 100%;
       height: 100%;
     }
+
+    /* #preview-video {
+      width: 20%;
+      height: 20%;
+    } */
 
     #preview-close {
       position: absolute;
@@ -147,6 +165,17 @@
     <div id="preview-close">X</div>
     <img id="preview-image" />
     <div id="preview-share">Share</div>
+  </div>
+
+  <div id="video-share">
+    <video id="preview-video" width="240" height="360"></video>
+
+    <div>
+      <button id="cancel_video_preview">Cancel</button>
+      <button id="share_video">Share</button>
+    </div>
+
+    <!-- <div id="preview-share">Share</div> -->
   </div>
 
   <div class="gifimage" id="placehere">

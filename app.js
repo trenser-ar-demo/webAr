@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	const capture = (renderer, scene, camera) => {
 
-		const video = document.querySelector('video')
+		//const video = document.querySelector('video')
+		const video = document.getElementsByTagName('video')[1]
 		const renderCanvas = renderer.domElement;
 
 		// output canvas
@@ -44,6 +45,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	// });
 
 	const previewImage = document.querySelector("#preview-image");
+	const previewVideo = document.querySelector("#preview-video");
+	const CancelpreviewVideo = document.querySelector("#cancel_video_preview");
+	const SharePreviewVideo = document.querySelector("#share_video");
+	const previewVideoDiv = document.querySelector("#video-share");
 	const previewClose = document.querySelector("#preview-close");
 	const preview = document.querySelector("#preview");
 	const previewShare = document.querySelector("#preview-share");
@@ -89,8 +94,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	const VideoCapture = (renderer, scene, camera) => {
 		recordButton.disabled = true;
-		recordButton.innerHTML="Recording.."
-		const video = document.querySelector('video')
+		recordButton.innerHTML = "Recording.."
+		//	const video = document.querySelector('video')
+		const video = document.getElementsByTagName('video')[1]
 		const renderCanvas = renderer.domElement;
 
 		// output canvas
@@ -125,13 +131,38 @@ document.addEventListener("DOMContentLoaded", function () {
 			var blob = new Blob(chunks, { 'type': 'video/mp4' });
 			chunks = [];
 			var videoURL = URL.createObjectURL(blob);
-			var a = document.createElement("a");
-			document.body.appendChild(a);
-			a.style = "display: none";
-			a.href = videoURL;
-			a.download = "fileas";
-			a.click();
-			window.URL.revokeObjectURL(url);
+
+			previewVideoDiv.style.visibility = "visible";
+			previewVideo.src = videoURL;
+			previewVideo.play()
+
+			SharePreviewVideo.addEventListener("click", () => {
+				const file = new File([blob], "video.mp4", { type: "video/mp4" })
+				const files = [file];
+				if (navigator.canShare && navigator.canShare({ files })) {
+					navigator.share({
+						files: files,
+						title: 'AR Video',
+					})
+				} else {
+					var a = document.createElement("a");
+					document.body.appendChild(a);
+					a.style = "display: none";
+					a.href = videoURL;
+					a.download = "fileas";
+					a.click();
+					window.URL.revokeObjectURL(url);
+				}
+			})
+
+			//previewVideo.loop = true
+			// var a = document.createElement("a");
+			// document.body.appendChild(a);	
+			// a.style = "display: none";
+			// a.href = videoURL;
+			// a.download = "fileas";
+			// a.click();
+			// window.URL.revokeObjectURL(url);
 		};
 		mediaRecorder.ondataavailable = function (e) {
 			chunks.push(e.data);
@@ -143,8 +174,8 @@ document.addEventListener("DOMContentLoaded", function () {
 			renderer.preserveDrawingBuffer = false;
 			clearInterval(canvasDrwaingLoop)
 			recordButton.disabled = false;
-			recordButton.innerHTML="Video"
-		}, 30000);
+			recordButton.innerHTML = "Video"
+		}, 5000);
 
 	}
 	recordButton.addEventListener("click", () => {
@@ -156,9 +187,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	});
 
-
+	CancelpreviewVideo.addEventListener('click', () => {
+		previewVideoDiv.style.visibility = 'hidden'
+	})
 
 })
+
 
 
 function loadMarkers() {
