@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-	const captureButton = document.querySelector("#capture-button");
+	const recordButton = document.querySelector("#record-button");
 	const sceneEl = document.querySelector('a-scene');
 
 	const capture = (renderer, scene, camera) => {
@@ -88,7 +88,8 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	const VideoCapture = (renderer, scene, camera) => {
-
+		recordButton.disabled = true;
+		recordButton.innerHTML="Recording.."
 		const video = document.querySelector('video')
 		const renderCanvas = renderer.domElement;
 
@@ -103,15 +104,14 @@ document.addEventListener("DOMContentLoaded", function () {
 		const sw = video.videoWidth - sx * 2;
 		const sh = video.videoHeight - sy * 2;
 
-		setInterval(function(){
+		renderer.preserveDrawingBuffer = true;
+		const canvasDrwaingLoop = setInterval(function () {
 			context.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
-				renderer.preserveDrawingBuffer = true;
-		renderer.render(scene, camera); // empty if not run
-		context.drawImage(renderCanvas, 0, 0, canvas.width, canvas.height);
-		renderer.preserveDrawingBuffer = false;
-		},100);
-		
-	
+			renderer.render(scene, camera); // empty if not run
+			context.drawImage(renderCanvas, 0, 0, canvas.width, canvas.height);
+		}, 100);
+
+
 
 		var videoStream = canvas.captureStream(30);
 		var mediaRecorder = new MediaRecorder(videoStream);
@@ -138,11 +138,16 @@ document.addEventListener("DOMContentLoaded", function () {
 		};
 
 		mediaRecorder.start();
-		//setInterval(draw, 300);
-		setTimeout(function () { mediaRecorder.stop(); }, 5000);
+		setTimeout(function () {
+			mediaRecorder.stop();
+			renderer.preserveDrawingBuffer = false;
+			clearInterval(canvasDrwaingLoop)
+			recordButton.disabled = false;
+			recordButton.innerHTML="Video"
+		}, 30000);
 
 	}
-	document.querySelector("#record-button").addEventListener("click", () => {
+	recordButton.addEventListener("click", () => {
 		const renderer = sceneEl.renderer;
 		const camera = sceneEl.camera;
 		const scene = sceneEl.sceneEl.object3D;
