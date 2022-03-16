@@ -135,6 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			previewVideoDiv.style.visibility = "visible";
 			previewVideo.src = videoURL;
 			previewVideo.play()
+		    previewVideo.loop = true
 
 			SharePreviewVideo.addEventListener("click", () => {
 				const file = new File([blob], "AR_video.mp4", { type: "video/mp4" })
@@ -155,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				}
 			})
 
-			//previewVideo.loop = true
+		
 			// var a = document.createElement("a");
 			// document.body.appendChild(a);	
 			// a.style = "display: none";
