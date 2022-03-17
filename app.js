@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			clearInterval(canvasDrwaingLoop)
 			recordButton.disabled = false;
 			recordButton.innerHTML = "Video"
-		}, 5000);
+		}, 30000);
 
 	}
 	recordButton.addEventListener("click", () => {
