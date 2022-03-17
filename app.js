@@ -79,6 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		link.download = 'AR_photo.png';
 		link.href = previewImage.src;
 		link.click();
+		preview.style.visibility = "hidden";
 
 		// canvas.toBlob((blob) => {
 		// 	const file = new File([blob], "photo.png", { type: "image/png" });
@@ -143,6 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		    previewVideo.loop = true
 
 			SharePreviewVideo.addEventListener("click", () => {
+				previewVideoDiv.style.visibility = "hidden";
 				// const file = new File([blob], "AR_video.mp4", { type: "video/mp4" })
 				// const files = [file];
 				// if (navigator.canShare && navigator.canShare({ files })) {
@@ -158,6 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					a.download = "AR_video.mp4";
 					a.click();
 					window.URL.revokeObjectURL(url);
+					
 			//	}
 			})
 
@@ -181,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			clearInterval(canvasDrwaingLoop)
 			recordButton.disabled = false;
 			recordButton.innerHTML = "Video"
-		}, 30000);
+		}, 5000);
 
 	}
 	recordButton.addEventListener("click", () => {
