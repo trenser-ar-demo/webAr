@@ -75,21 +75,26 @@ document.addEventListener("DOMContentLoaded", function () {
 		const context = canvas.getContext('2d');
 		context.drawImage(previewImage, 0, 0, canvas.width, canvas.height);
 
-		canvas.toBlob((blob) => {
-			const file = new File([blob], "photo.png", { type: "image/png" });
-			const files = [file];
-			if (navigator.canShare && navigator.canShare({ files })) {
-				navigator.share({
-					files: files,
-					title: 'AR Photo',
-				})
-			} else {
-				const link = document.createElement('a');
-				link.download = 'photo.png';
-				link.href = previewImage.src;
-				link.click();
-			}
-		});
+		const link = document.createElement('a');
+		link.download = 'AR_photo.png';
+		link.href = previewImage.src;
+		link.click();
+
+		// canvas.toBlob((blob) => {
+		// 	const file = new File([blob], "photo.png", { type: "image/png" });
+		// 	const files = [file];
+		// 	if (navigator.canShare && navigator.canShare({ files })) {
+		// 		navigator.share({
+		// 			files: files,
+		// 			title: 'AR Photo',
+		// 		})
+		// 	} else {
+		// 		const link = document.createElement('a');
+		// 		link.download = 'photo.png';
+		// 		link.href = previewImage.src;
+		// 		link.click();
+		// 	}
+		// });
 	});
 
 	const VideoCapture = (renderer, scene, camera) => {
@@ -138,22 +143,22 @@ document.addEventListener("DOMContentLoaded", function () {
 		    previewVideo.loop = true
 
 			SharePreviewVideo.addEventListener("click", () => {
-				const file = new File([blob], "AR_video.mp4", { type: "video/mp4" })
-				const files = [file];
-				if (navigator.canShare && navigator.canShare({ files })) {
-					navigator.share({
-						files: files,
-						title: 'AR Video',
-					})
-				} else {
+				// const file = new File([blob], "AR_video.mp4", { type: "video/mp4" })
+				// const files = [file];
+				// if (navigator.canShare && navigator.canShare({ files })) {
+				// 	navigator.share({
+				// 		files: files,
+				// 		title: 'AR Video',
+				// 	})
+				// } else {
 					var a = document.createElement("a");
 					document.body.appendChild(a);
 					a.style = "display: none";
 					a.href = videoURL;
-					a.download = "fileas";
+					a.download = "AR_video.mp4";
 					a.click();
 					window.URL.revokeObjectURL(url);
-				}
+			//	}
 			})
 
 		
