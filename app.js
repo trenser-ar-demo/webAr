@@ -1,8 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
 
 	const recordButton = document.querySelector("#record-button");
+	const switchCameraButton = document.querySelector("#switch-camera-button");
+	
 	const sceneEl = document.querySelector('a-scene');
-
+	const arSystem = sceneEl.systems["mindar-image-system"];
+  
+	switchCameraButton.addEventListener('click', () => {
+	  arSystem.switchCamera();
+	});
 	const capture = (renderer, scene, camera) => {
 
 		//const video = document.querySelector('video')

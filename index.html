@@ -3,16 +3,20 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <script
     src="https://unpkg.com/aframe-animation-component@^4.1.1/dist/aframe-animation-timeline-component.min.js"></script>
   <script
     src="https://unpkg.com/aframe-animation-timeline-component@2.0.0/dist/aframe-animation-timeline-component.min.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.0.0/dist/mindar-image.prod.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.0.0/dist/mindar-image.prod.js"></script> -->
+  <script src="./mind-ar-js-master/dist/mindar-image.prod.js"></script>
+
+
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.0.0/dist/mindar-image-aframe.prod.js"></script>
+
+  <!-- <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.0.0/dist/mindar-image-aframe.prod.js"></script> -->
+  <script src="./mind-ar-js-master/src/image-target/aframe.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
     integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q=="
@@ -149,9 +153,9 @@
 
 <body onload="loadMarkers()">
 
-  <!-- <div style="position: absolute; z-index: 1000; margin: 20px;">
-    <button id="record-button">Record</button>
-  </div> -->
+  <div style="position: absolute; z-index: 1000; margin: 20px;">
+    <button id="switch-camera-button">Switch camera</button>
+  </div>
 
   <div id="capture_button_container">
     <div>
@@ -170,7 +174,7 @@
   <div id="video-share">
     <video playsinline id="preview-video" width="240" height="360"></video>
 
-    <div style="margin-top:10px;" >
+    <div style="margin-top:10px;">
       <button id="cancel_video_preview">Cancel</button>
       <button id="share_video">Save</button>
     </div>
