@@ -258,7 +258,10 @@ function loadMarkers() {
 	else if (modelType == "text") {
 		loadText(textAnimeType)
 	}
-
+	else if (modelType == "bgfilter") {
+		loadFilter();
+		
+	}
 }
 
 function load3dModles() {
@@ -511,4 +514,44 @@ function type_write(instance) {
 
 }
 
+function loadFilter() {
+	const urlParams = new URLSearchParams(window.location.search)
+	let type = urlParams.get("model")
 
+	if (type == "colorfilter_red") {
+		const aImage = document.createElement("a-image");	
+		aImage.setAttribute("src","background_filters/colors/AR_ColorFilter_red.gif");
+		aImage.setAttribute("height", "7");
+		aImage.setAttribute("width", "7");
+		aImage.setAttribute("position", "0 0 0");
+		var element = document.getElementById("#modelEntity");
+		element.appendChild(aImage);
+	}
+	if (type == "colorfilter_blue") {
+		const aImage = document.createElement("a-image");		
+		aImage.setAttribute("src","background_filters/colors/AR_ColorFilter_blue.gif");
+		aImage.setAttribute("height", "7");
+		aImage.setAttribute("width", "7");
+		aImage.setAttribute("position", "0 0 0");
+		var element = document.getElementById("#modelEntity");
+		element.appendChild(aImage);
+	}
+	if (type == "colorfilter_pale") {
+		const aImage = document.createElement("a-image");	
+		aImage.setAttribute("src","background_filters/colors/AR_ColorFilter_pale.gif");
+		aImage.setAttribute("height", "7");
+		aImage.setAttribute("width", "7");
+		aImage.setAttribute("position", "0 0 0");
+		var element = document.getElementById("#modelEntity");
+		element.appendChild(aImage);
+	}
+	if (type == "colorfilter_yellow") {
+		const aImage = document.createElement("a-image");		
+		aImage.setAttribute("src","background_filters/colors/AR_ColorFilter_yellow.gif");
+		aImage.setAttribute("height", "7");
+		aImage.setAttribute("width", "7");
+		aImage.setAttribute("position", "0 0 0");
+		var element = document.getElementById("#modelEntity");
+		element.appendChild(aImage);
+	}
+}
