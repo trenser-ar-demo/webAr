@@ -360,6 +360,7 @@ function loadText(anime_type) {
 	if (anime_type === 'flashing') {
 		markerDiv.setAttribute("value", modelId);
 		markerDiv.setAttribute("animation", "property: opacity; to: 0; loop: true; dur: 500")
+	//	markerDiv.setAttribute("opacity", "0.5")
 	}
 
 	/////// Expansion ///////
