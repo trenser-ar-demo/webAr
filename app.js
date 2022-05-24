@@ -288,6 +288,15 @@ function load3dModles() {
 	} else if (modelId == "5") {
 		markerDiv.setAttribute("gltf-model", "models/3D/cutecat.glb");
 		markerDiv.setAttribute("scale", "0.25 0.25 0.25");
+	}else if (modelId == "6") {
+		markerDiv.setAttribute("gltf-model", "models/3D/LOVE_60fps.glb");
+		markerDiv.setAttribute("scale", "0 6 0");
+		markerDiv.setAttribute("scale", "6 6 6");
+		markerDiv.setAttribute("rotation", "90 0 0");
+	}else if (modelId == "7") {
+		markerDiv.setAttribute("gltf-model", "models/3D/Rainbow_60fps.glb");
+		markerDiv.setAttribute("scale", "6 6 6");
+		markerDiv.setAttribute("rotation", "90 0 0");
 	} else {
 		markerDiv.setAttribute("gltf-model", "models/3D/skyscraper.gltf");
 		markerDiv.setAttribute("scale", "0.05 0.05 0.05");
